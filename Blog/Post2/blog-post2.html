@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial;
+	  background-color: lightyellow;
+    }
+  </style>
+</head>
+
+<body>
+<p>Resumo do começo do capítulo 2. Fundamentos da imagem digital, do livro Processamento digital de imagens. 3. ed. E-book.</p>
+
+<b>ELEMENTOS DA PERCEPÇÃO VISUAL</b>
+<div>
+<p>Quando o olho está adequadamente focalizado, a luz de um objeto externo ao olho forma uma imagem na retina. A visão de padrões é obtida pela distribuição de receptores discretos de luz ao longo da superfície da retina.</p>
+
+<p>Os humanos conseguem distringuir pequenos detalhes com uma classe de receptores, chamada de cones, em que cada um deles está conectado à sua própria terminação nervosa.<br>
+Os músculos que controlam o olho giram o globo ocular até que a imagem de uma objeto de interesse incida na porção central da retina, chamada de fóvea.</p>
+
+<p>A outra classe de receptores, bastonetes, servem para dar uma imagem geral do campo de visão. Eles não estão envolvidos na visualização de cores e são sensíveis a baixos níveis de iluminação.<br>
+Os bastonetes aumentam em densidade a partir do centro até aproximadamente 20° do eixo e, então, diminuem, em densidade até a periferia extrema da retina. A ausência de receptores nessa área resulta no assim chamado ponto cego.</p>
+
+<p>Em uma camêra fotográfica comum, a lente tem uma distância focal fixa, e a focalização para diferentes distâncias é obtida variando a distância entre a lente e o plano-imagem, onde o filme se localiza.<br>
+No olho humano, ocorre o oposto: a distância entre a lente e o plano-imagem (a retina) é fixa, e a distância focal necessária para atingir uma focalização adequada é obtida variando o formato do cristalino (que equivale a uma lente flexível).</p>
+
+<p>A percepção ocorre pela excitação relativa dos receptores de luz, que transformam a energia radiante em impulsos elétricos, que são posteriormente decodificados pelo cérebro.</p>
+</div>
+
+<b>A LUZ E O ESPECTRO ELETROMAGNÉTICA</b>
+<div>
+<p>A luz é um tipo particular de radiação eletromagnética que pode ser percebida pelo olho humano. O espectro visível de cores é dividido em seis regiões: violeta, azul, verde, amarelo, laranja e vermelho.<br>
+As cores percebidas pelo humanos em um objeto são determinadas pela natureza da luz refletida pelo objeto.</p>
+
+<p>A luz sem cor é chamada de luz monocromática (ou acromática). O único atributo de luz monocromática é sua intensidade ou quantidade.<br>
+Pelo fato de a intensidade da luz monocromática ser percebida como variações de preto a tons de cinza até chegar ao branco, o termo nível de cinza costuma ser utilizado para denotar a intensidade monocromática (intensidade e nível de cinza).<br>
+A variedade de valores mensurados de luz monocromática do preto ao branco costuma ser chamada de escala de cinza.</p>
+
+<p>Além da frequência, três medidas básicas são utilizadas para descrever a qualidade de uma fonte de luz cromática (colorida):<br>
+<ul>
+  <li>Radiância: quantidade total de energia que é emitida pela fonte de luz</li>
+  <li>Luminância: quantidade de energia que um observador percebe de uma fonte de luz</li>
+  <li>Brilho: descritor subjetivo da percepção da luz que é praticamente impossível de mensurar. Ele incorpora a noção acromática de intensidade e é um dos principais fatores na descrição da sensação de cores.</li>
+</ul>
+</p>
+
+<p>Em princípio, se um sensor capaz de detectar energia irradiada por uma banda do espectro eletromagnético puder ser desenvolvido, é possível criar imagens de eventos de interesse nessa banda.<br>
+O comprimento de onda de uma onda eletromagnética que é necessário para "ver" um objeto deve ser do mesmo tamanho ou menor que o objeto. Essa limitação, além das propriedades físicas do material do sensor, define os limites fundamentais da capacidade dos sensores de aquisição de imagens, como os sensores de luz visível, o infravermelho e outros.</p>
+
+<p>O som refletido pode ser usado para formar imagens de ultrassom.<br>
+Outras importantes fontes de imagens digitais são feixes de elétrons para microcopia eletrônica e imagens sintéticas utilizadas em elementos gráficos e visualização.</p>
+</div>
+
+<b>SENSORES E AQUISIÇÃO DE IMAGENS</b>
+<div>
+<p>A energia que entra é transformada em tensão pela combinação da energia elétrica de entrada e do material do sensor, sensível a um tipo específico de energia que está sendo detectado. A forma de onda da tensão da saída é a resposta do(s) sensor(es), e uma quantidade digital é obtida de cada sensor por meio da digitalização de sua resposta.</p>
+
+<p>Talvez o sensor mais conhecido desse tipo seja o fotodiodo, cuja forma de onda da tensão de saída é proporcional à intensidade da luz. A utilização de um filtro na entrada de um sensor melhora sua seletividade.<br>
+Para gerar uma imagem bidimensional (2-D) utilizando um único sensor, deve haver deslocamentos relativos, tanto na direção x quanto na y entre o sensor e a área de aquisição da imagem.<br>
+<ul>
+	<li>Um único sensor é montado em um eixo que realiza o momento na direção perpendicular com alto nível de precisão.</li>
+	<li>Outros arranjos mecânicos similares utilizam uma base plano com o sensor se movimentando em duas direções lineares.</li>
+	<li>Outro exemplo com um único sensor utiliza uma fonte de raio laser que coincide com o sensor.</li>
+</ul>
+</p>
+
+<p>Uma disposição geométrica utilizada com muito mais frequência consiste em um arranjo linear de sensores na forma de uma faixa de sensores, fornecendo elementos para aquisição de imagens em uma direção.<br>
+Esse é o tipo de arranjo utilizando na maioria dos scanners de mesa.<br>
+<ul>
+	<li>Os sensores por varredura de linha costumam ser utilizados em aplicações de aquisição de imagens aéreas.</li>
+	<li>Os sensores por varredura de linha instalados em uma configuração em forma de anel são utilizados na aquisição de imagens médias e industriais.</li>
+</ul>
+</p>
+
+<p>Numerosos dispositivos sensores eletromagnéticos e alguns ultrassônicos são frequentemente dispostos na forma matricial. Esse também é o arranjo predominante encontrado nas câmeras digitais.<br>
+Um sensor típico para essas câmeras é uma matriz CCD, que pode ser fabricada com uma grande variedade de propriedades sensoras e dispostas em arranjos matriciais de 4000x4000 elementos ou mais.<br>
+Sua principal vantagem é que uma imagem completa pode ser ser obtida projando o padrão de energia na superfície da matriz e o movimento não é necessário.<br>
+<ul>
+	<li>A primeira função realizada pelo sistema de aquisição de imagens é coletar a energia de entrada e projetá-la em um plano de imagem.</li>
+	<li>O arranjo de sensores, que coincide com o plano focal, produz saídas proporcionais à integral da luz recebida em cada sensor.</li>
+	<li>Circuitos digitais e analógicos realizam uma varredura nessas saídas e as convertem em uma sinal analógico, que é então digitalizado por outro componente do sistema de aquisição de imagens.</li>
+	<li>A saída é uma imagem digital.</li>
+</ul>
+</p>
+</div>
+
+<b>AMOSTRAGEM E QUANTIZAÇÃO DE IMAGENS</b>
+<p>
+Para criar uma imagem digital, precisamos converter os dados contínuos que foram capturados para o formato digital. Isso envolve dois processos: amostragem e quantização.<br>
+
+.
+.
+.
+</p>
+</body>
+</html>

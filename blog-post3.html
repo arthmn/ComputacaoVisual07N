@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+    min-height: 100vh;
+    color: #292929;
+	background: linear-gradient(120deg, #faf7f0, #f1eadf);
+    font-family: Georgia, serif;
+    }
+  </style>
+</head>
+
+<body>
+<p>Resumo extraído do livro Processamento digital de imagens. 3. ed. E-book com fins de estudo sobre os assuntos da última aula</p>
+
+<b>AMOSTRAGEM E QUANTIZAÇÃO DE IMAGENS</b>
+<div>
+
+<p>Expressamos imagens como funções bidimensionais na forma <b>f(x,y)</b>. O valor ou a amplitude f nas coordenadas espaciais <b>(x,y)</b> é uma quantidade escalar positiva cujo significado físico é determinado pela origem da imagem.<br>
+Quando é uma imagem gerada a partir de processos físicos, seus valores de intensidade são proporcionais à energia irradiada por uma fonte real. Em consequência disso, <b>f(x,y)</b> deve ser diferente de zero e infinito.<br>
+A função <b>f(x,y)</b> pode ser caracterizada por dois componentes:<br>
+<ol>
+  <li>A quantidade de iluminação da fonte que incide na cena que está sendo vista (iluminação -  entre 0 e infinito);</li>
+  <li>A quantidade de iluminação refletida pelos objetos na cena (refletância - entre 0 e 1).</li>
+</ol>
+</p>
+
+<p>Para criar uma imagem digital, precisamos converter os dados contínuos que foram capturados para o formato digital. Isso envolve dois processos: amostragem e quantização.</p>
+
+<p>A digitalização dos valores de coordenada é chamada de amostragem. A digitalização dos valores de amplitude (níveis de intensidade) é chamada de quantização.<br>
+A qualidade da imagem digital é determinada, em grande parte, pelo número de de amostras de níveis discretos de intensidade utilizados na amostragem e quantização.</p>
+
+<p>A origem de uma imagem digital se localiza na parte superior esquerda, com o eixo x positivo se estendendo para baixo e o eixo y positivo se estendendo para a direita. Essa é uma representação convencional baseada no fato de que muitos dispositivos de visualização de imagem varrem uma imagem começando do canto superior esquerda e se movendo para a direita, uma linha por vez.</p>
+
+<p>Suponha que realizemos a amostragem da imagem contínua em uma matriz 2-D, <b>f(x,y)</b>, contendo M linhas e N colunas, sendo que <b>(x,y)</b> são coordenadas discretas. Dessa forma, por exemplo, o valor da imagem digital na origim é <b>f(0,0)</b>, e o próximo valor de coordenada ao longo da primeira linha é <b>f(0,1)</b>.</p>
+
+<p>Algumas vezes, a faixa de valores cobertos pela escala de cinza é chamada informalmente de faixa dinâmica. Aqui, definimos a faixa dinâmica de um sistema de aquisição de imagens como a razão da intensidade máxima mensurável pela intensidade mínima detectável no sistema.<br>
+Como regra, o limite superior é determinado pela saturação e o limite inferior pelo ruído.<br>
+<ul>
+	<li>Saturação é o valor mais alto além do qual todos os níveis de intensidade são cortados.</li>
+	<li>O ruído, especialmente nas regiões mais escuras de uma imagem, mascara o menor nível real de intensidade detectável.</li>
+</ul>
+Basicamente, a faixa dinâmica define os níveis inferior e superior de intensidade que um sistema pode representar e, consequentemente, que uma imagem pode ter.<br>
+Estreitamente associado a esse conceito temos o contraste da imagem, que definimos como a diferença entre os níveis superior e inferior de intensidade presentes em uma imagem. Quando um número significativo de pixels em uma imagem possui uma alta faixa dinâmica, podemos esperar que a imagem tenha um alto contraste.</p>
+
+<p>Quando uma imagem pode ter <b>2<sup>k</sup></b> níveis de intensidade, é comum nos referirmos a ela como uma "imagem de k bits". Por exemplo, uma imagem com 256 valores discretos possíveis de intensidade é chamada de uma imagem de 8 bits.</p>
+
+<p>A resolução espacial é uma medida do menor detalhe discernível em uma imagem. Quantitativamente, a resolução espacial pode ser expressa em várias formas, pontos por unidade de distância é uma medida de resolução de imagem comumente utilizada por editores e industrias gráficas (normalmente expressa como pontos por polegada ou dpi).<br>
+Dizer que uma imagem tem, digamos, uma resolução de 1024 x 1024 pixels não faz muito sentido se as dimensões espaciais da imagem não forem especificadas.</p>
+
+<p>Por exemplo, o tamanho da imagem original é de 3692x2812 pixels, mas a imagem de 72 dpi é uma matriz de tamanho 213x162. Com efeito, 300dpi é a mínima resolução espacial típica de imagem utilizada na publicação de livros.</p>
+
+<p>A utilização de uma número insuficiente de níveis de intensidade (<b>2<sup>k</sup></b>) em áreas suaves de uma imagem digital, é chamada de falso contorno. O falso contorno customa ser bastante visível em imagem exibidas utilizando 16 níveis ou menos níveis de intensidade uniformemente espaçados.</p>
+
+</div>
+
+<b>FUNDAMENTOS</b>
+<div>
+
+<p>As técnicas de domínio espacial atuam diretamente nos pixels de uma imagem. Em geral, as técnicas no domínio espacial são computacionalmente mais eficientes e requerem menos recursos de processamento para serem realizadas.</p>
+
+<p>Os processos no domínio espacial podem ser expressos por:<br>
+	<p style="text-indent: 40px;"><b>g(x,y) = T[f(x,y)]</b><br></p>
+onde <b>f(x,y)</b> é a imagem de entrada, <b>g(x,y)</b> é a imagem de saíde, e T é um operador em f definido em uma vizinhança do ponto <b>(x,y)</b>.<br>
+A aplicação básica da equação em uma única imagem:<br>
+<ul>
+  <li>O ponto <b>(x,y)</b> é uma posição arbitrária na imagem</li>
+  <li>A região contendo o ponto é uma vizinhança <b>(x,y)</b> - em geral, retangular, centralizada em <b>(x,y)</b> e tem tamanho tamanho muito menor que a imagem.</li>
+  <li>O processo consiste em mover a origem da vizinhança de um pixel ao outro e aplicar o operador T aos pixels na vizinhança para gerar a saída nessa posição.</li>
+</ul>
+Dessa forma, para qualquer posição específica <b>(x,y)</b>, o valor da imagem de saída g nessas coordenadas é igual ao resultado da aplicação de T à vizinhança com origem em <b>(x,y)</b> na imagem f.<br>
+Quando a origem da vizinhança se localizar na borda da imagem, parte da vizinhança ficará fora dela. O procedimento consiste em ignorar os vizinhos externos ou preencher a imagem com uma borda de 0s ou outros valores de intensidade definidos.</p>
+
+<p>O procedimento que acabamos de descrever é chamado de filtragem espacial, no qual a vizinhança, acompanhada de uma operação predefinida, é chamada de filtro espacial (máscara espacial, kernel, template ou janela).<br>
+O tipo de natureza realizada na vizinhança determina a natureza do processo de filtragem.</p>
+
+<p>A menor vizinhança possível tem tamanho 1x1. Nesse caso, g depende apenas do valor de f em um único ponto <b>(x,y)</b>, e T se torna uma função de intensidade (função de transformação de níveis de cinza ou de função de mapeamento):<br>
+	<p style="text-indent: 40px;"><b>s = T(r)</b><br></p>
+onde os valores dos pixels antes e depois do processamento são representados por r e s, respecitvamente.<br>
+Funções de transformação linear de intensidade:<br>
+<ul>
+  <li>Alargamento de contraste</li>
+  <li>Limiarização (Thresholding)</li>
+</ul>
+</p>
+</div>
+
+<b>ALGUMAS FUNÇÕES BÁSICAS DE TRANSFORMAÇÃO DE INTENSIDADE</b>
+<div>
+
+<p>Três tipos básicos de funções frequentemente utilizadas para o realce de imagens:
+<ul>
+  <li>Linear: transformação de negativo e de identidade (caso trivial no qual as intensidades de saíde são idênticas às intensidade de entrada)</li>
+  <li>Logarítmica: transformação de log e log inverso</li>
+  <li>Potência: transformação de n-ésima potência e n-ésima raiz.</li>
+</ul>	
+</p>
+
+<p>O negativo de uma imagem com níveis de intensidade na faixa <b>[0, L-1]</b> é obtido pela expressão:<br>
+	<p style="text-indent: 40px;"><b>s = L - 1 - r</b><br></p>
+Esse tipo de processamento é particularmente adequado para realçar detalhes brancos ou cinza incorporados a regiões escuras de uma imagem, especialmente quando as áreas escuras são dominantes em termos de tamanho.</p>
+
+<p>A forma geral da transformação logarítmica é:<br>
+	<p style="text-indent: 40px;"><b>s = c log (1 + r)</b><br></p>
+onde c é uma constante e considera-se que <b>r>=0</b>.<br>
+Essa transformação mapeia uma faixa estreita de baixos valores de intensidade de entrada em uma faixa mais ampla de níveis de saída. O oposto se aplica aos valores mais altos de níveis de intensidade de entrada.<br>
+Utilizamos uma transformação desse tipo para expandir os valores de pixels mais escuros em uma imagem ao mesmo tempo em que comprimimos os valores de nível mais alto. O oposto se aplica à transformação logarítmica inversa.</p>
+
+<p>As transformações de potência apresentam a forma básica:<br>
+	<p style="text-indent: 40px;"><b>s = cr<sup>&gamma;</sup></b><br></p>
+sendo c e &gamma; constantes positivas. A equação é reduzida à transformação de identidade quando <b>c = &gamma; = 1</b>.<br>
+Como no caso da transformação logarítmica, curvas de transformação de potência com valores de &gamma; menores que 1 (fração) mapeiam uma faixa estreita de valores escuros de entradas em uma faixa mais ampla de valores de saída, com o oposto se aplicando a valores mais altos nos níveis de entrada.<br>
+Aqui, toda uma classe de curvas de transformações possíveis obtidas simplesmente por meio da variação de &gamma;.<br>
+Por convenção, o expoente na equação de potência é chamado de gama. O processo utilizado para corrigir esses fênomenos de resposta à lei de potência é chamado de correção gama.<br>
+A correção gama é importante quando uma imagem precisa ser exibida na tela de um computador com exatidão.<br>
+A variação do gama altera não apenas a intensidade como também as proporções de vermelho, verde e azul em uma imagem colorida.<br>
+<ul>
+	<li>A medida que o gama é reduzido, mais detalhes se tornam visíveis.</li>
+	<li>Uma redução adicional de gama aumenta um pouco mais os detalhes do fundo da imagem, mas já começa a reduzir o constraste, de modo que a imagem passa a ter uma aparência ligeiramente "desbotada", sem brilho, especialmente no fundo. </li>
+	<li>Um gama alto apresenta áreas muito escuros, nas quais alguns detalhes são perdidos.</li>
+</ul>
+</p>
+
+<p>Uma abordagem complementar consiste na utilização de funções lineares definidas por partes.
+<ul>	
+	<li>A principal vantagem é que a forma das funções por partes pode ser arbitrariamente complexa.</li>
+	<li>A principal desvantagem consiste no fato de sua especificação requerer consideravelmente mais dados de entrada do usuário.</li>
+</ul>
+.
+.
+.
+</p>
+</div>
+
+</body>
+</html>

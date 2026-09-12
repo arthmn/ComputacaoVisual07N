@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+    min-height: 100vh;
+    color: #292929;
+	background: linear-gradient(120deg, #faf7f0, #f1eadf);
+    font-family: Georgia, serif;
+    }
+  </style>
+</head>
+<body>
+
+<p>Resumo extraído do livro Processamento digital de imagens. 3. ed. E-book para fins de estudo sobre os tópicos das últimas aulas.</p>
+
+<b>ALGUMAS FUNÇÕES BÁSICAS DE TRANSFORMAÇÃO DE INTENSIDADE (CONTINUAÇÃO)</b>
+<div>
+
+<p>Uma das mais simples funções lineares definidas por partes é a transformação de alargamento por contraste. O alargamento de contraste é um processo que expande a faixa de níveis de intensidade de uma imagem de modo a incluir todo o intervalo de intensidades do meio de gravação ou do dispositivo de exibição.<br>
+<img src="imagem1.png", alt="figura 1"/><br>
+As posições dos pontos <b>(r1, s1)</b> e <b>(r2, s2)</b> controlam o formato da função de transformação.<br>
+<ul>
+	<li>Se <b>r1 = s1</b> e <b>r2 = s2</b>, a transformação é uma função linear que não produz nenhuma alteração nos níveis de intensidade</li>
+	<li>Se <b>r1 = r2, s1 = 0</b> e <b>s2 = L - 1</b>, a transformação se torna uma função de limiarização que cria uma imagem binária</li>
+	<li>Os intervalos intermediários de <b>(r1, s1)</b> e <b>(r2, s2)</b> produzem vários graus de expansão dos níveis de intensidade da imagem de saída, afetando, assim, seu constraste</li>
+</ul>
+</p>
+
+<p>Frequentemente, pode ser interessante enfatizar um intervalo específico de intensidades em uma imagem. O processo, muitas vezes chamado de fatiamento de níveis de intensidade, pode ser implementado de várias formas, mas a maioria constitui uma viariação de dois temas básicos.<br>
+<ul>
+	<li>Exibir em um valor (digamos, o branco), todos os valores na faixa de interesse e, em outro (digamos, o preto), todas as outras intensidades. Essa transformação produz uma imagem binária.</li>
+<img src="imagem2.png" alt="figura 2"/><br>
+	<li>A segunda metodologia clareia (ou escurece) a faixa desejada de intensidades, mas mantém inalterados todos os outros níveis de intensidade da imagem</li>
+<img src="imagem3.png" alt="figura 3"/><br>
+</ul>
+</p>
+
+<p>A intensidade de cada pixel em uma imagem em escala de cinza de 256 níveis é composta por 8 bits (isto é, um byte). Em vez de enfatizar faixas de intensidade, poderíamos enfatizar a contribuição feita à aparência final da imagem por bits específicos.<br>
+<ul>
+	<li>Os quatro planos de bits mais significativos, especialmente os dois últimos, contêm uma boa quantidade dos dados visualmente significativos</li>
+	<li>Os planos menos significativos contribuem com detalhes de intensidades mais sutis na imagem</li>
+</ul>
+Costuma ser útil decompor uma imagem em planos de bits para analisar a importância relativa de cada bit na imagem, um processo que ajuda a determinar a adequação do número de bits utilizados para quantizar a imagem.</p>
+
+</div>
+
+<b>PROCESSAMENTO DE HISTOGRAMA</b>
+<div>
+
+<p>O histograma de uma imagem digital com níveis de intensidade no intervalo <b>[0, L - 1]</b> é uma função discreta<br>
+	<p style="text-indent: 40px;"><b>h(rk) = nk</b>,<br></p>
+onde rk é o k-ésimo valor de intensidade e nk é o número de pixels da imagem com intensidade rk.<br>
+Costuma-se normalizar um histograma dividindo cada um desses componentes pelo número total de pixels da imagem, expresso pelo produto <b>MN</b>, onde, geralmente, <b>M</b> e <b>N</b> são as dimensões de linha e coluna da imagem. Dessa forma, um histograma normalizado é dado por<br>
+	<p style="text-indent: 40px;"><b>p(rk) = rk / MN para k = 0, 1, 2,...,L-1</b>,<br></p>
+A soma de todos os componentes de um histograma normalizado é igual a 1.</p>
+
+<p>O eixo horizontal de cada histograma corresponde a valores de intensidade <b>rk</b>. O eixo vertical corresponde a valores de <b>h(rk) = nk</b> ou <b>p(rk) = n / MN</b> se os valores forem normalizados.<br>
+<ul>	
+	<li>Na imagem escura, os componentes do histograma estão concentrados no lado inferior (escuro) da escala de intensidades</li>
+	<li>De forma similar, os componentes do histograma da imagem clara tendem à direção do lado superior da escala</li>
+	<li>Uma imagem com baixo contraste tem um histograma estreito normalmente localizado no meio da escala de intensidades. Para uma imagem monocromática, isso implica uma aparência cinza, desbotada e sem brilho</li>
+	<li>Os componentes do histograma na imagem de alto contraste cobrem uma faixa bem ampla na escala de intensidades e, também, que a distribuição de pixels não está muito longe de ser uniforme, com poucas linhas verticais sendo muito mais altas do que as outras</li>
+</ul>
+Intuitivamente, é razoável concluir que uma imagem cujos pixels tendem a ocupar todo o intervalo de níveis possíveis de intensidade e, além disso, tendem a ser distribuídos uniformemente terá uma aparência de alto contraste e exibirá uma grande variedade de tons de cinza.</p>
+
+<p>A equalização de um histograma automaticamente determina uma função de transformação que busca produzir uma imagem de saída que tenha um histograma uniforme.</p>
+</div>
+
+<b>FUNDAMENTOS DA FILTRAGEM ESPACIAL</b>
+<div>
+
+<p>O termo filtro se refere a aceitar (passar) ou rejeitar certos componentes de frequência.<br>
+Um filtro que aceita baixas frequências é chamado de filtro passa-baixa. O efeito final produzido é borrar (suavizar) uma imagem. Podemos obter uma suaviação similar diretamente da própria imagem utilizando filtros espaciais (também chamados de máscaras, kernels, templates e janelas).</p>
+
+<p>Um filtro espacial consiste em:<br>
+<ol>	
+	<li>Uma vizinhança (normalmente um pequeno retângulo)</li>
+	<li>Uma operação predefina realizada sobre os pixels da imagem incluídos na vizinhança</li>
+</ol>
+A filtragem cria um novo pixel com coordenadas iguais às coordenadas do centro da vizinhança, e cujo valor é o resultado da operação de filtragem.<br>
+Se a operação realizada sobre os pixels da imagem for linear, o filtro é chamado de filtro espacial linear. Caso contrário, o filtro é não linear.</p>
+
+<p>Para um tamanho de máscara <b>m x n</b>, consideramos que <b>m = 2a + 1</b> e <b>n = 2b + 1</b>, sendo <b>a</b> e <b>b</b> números inteiros positivos. Isso significa que nosso foco de discussão será em filtros de tamanho ímpar, e o menor é de tamanho <b>3x3</b>.</p>
+
+<p>A correlação é o processo de mover uma máscara pela imagem e calcular a soma dos produtos em cada posição.<br>
+O funcionamento da convolução é o mesmo, exceto o fato de o primeiro filtro ser rotacionado a 180°.<br>
+O primeiro valor da correlação corresponde ao deslocamento zero do filtro, o segundo corresponde ao deslocamento de uma unidade, e assim por diante.<br>
+São capazes de realizar a função uma da outra por uma simples rotação do filtro, o importante é que a máscara do filtro utilizada em uma dada tarefa de filtragem seja especificada de forma a corresponder com a operação pretendida.</p>
+	
+<p>Os filtros de suavização são utilizados para borramento e redução de ruído.<br>
+O borramento é aplicado em tarefas de pré-processamento, como remoção de pequenos detalhes da imagem antes da extração de objetos<br>
+A saída (resposta) de um filtro espacial linear de suaviação é simplesmente a média dos pixels contidos na vizinhança da máscara da filtragem.<br>
+Esses filtros por vezes são chamados de filtros de média.</p>
+	
+<p>Ao substituir o valor de cada pixel de uma imagem pela média dos níveis de intensidade da vizinhança definida pela máscara, o processo resulta em uma imagem com perda da nitidez, ou seja, redução das transições "abruptas" nas intensidades.<br>
+A aplicação mais evidente da suavização é a redução do ruído.<br>
+No entanto, os filtros de média apresentam o efeito colateral indesejável de borrar as bordas.<br>
+Uma importante utilização dos filtros de média é a redução de detalhes menores que o tamanho da máscara utilizada na imagem.<br>
+É comum uma operação como essa ser seguida pela limiarização para eliminar objetos com base em sua intensidade.</p>
+
+<p>Dois filtros de suavização <b>3x3</b>:<br>
+<ul>
+	<li>O primeiro gera a média aritmética simples dos pixels cobertos pela máscara.</li>
+	<li>A segunda máscara gera a chamada média ponderada. A estratégia básica por trás do processo de atribuir o maior peso ao ponto central e, depois, reduzir o valor dos coeficientes em função do aumento da distância da origem, é simplesmente uma tentativa de reduzir o borramento no processo de suavização.</li>
+</ul>
+Na prática, em geral é difícil ver as diferenças entre as imagens suavizadas utilizando uma das máscaras, porque a área coberta por essas máscaras em qualquer posição de uma imagem é muito pequena.</p>
+
+<p>Os filtros de estatística de ordem são filtros espaciais não lineares cuja resposta se baseia na ordenação dos pixels contidos na área da imagem coberta pelo filtro e substituindo o valor do pixel central pelo valor determinado pelo resultado da classificação.<br>
+O filtro mais conhecido dessa categoria é o filtro de mediana.<br>
+Os filtros de mediana são bastante populares, porque, para certos tipos de ruído aleatório, proporcionam excelentes resultados na redução do ruído, com borramento consideravelmente menor que os filtros lineares de suavização de tamanho similar.<br>
+Os filtros de mediana são particularmente eficazes na presença de ruído impulsivo, também chamado de ruído sal e pimenta, em razão de sua aparência, como pontos brancos e pretos sobrepostos em uma imagem.<br>
+<ul>
+	<li>Utilizar o <b>100°</b> percentil resulta no chamado filtro max, útil para identificar os pontos mais claros de uma imagem.</li>
+	<li>O filtro de <b>0°</b> percentil é o filtro min, utilizado para fazer o oposto.</li>
+<ul>
+</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+    min-height: 100vh;
+    color: #292929;
+	background: linear-gradient(120deg, #faf7f0, #f1eadf);
+    font-family: Georgia, serif;
+    }
+	img {
+	display: block;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	}
+  </style>
+</head>
+<body>
+
+<p>
+Resumo extraído do livro Processamento digital de imagens. 3. ed. E-book e material da disciplina para fins de estudo sobre os tópicos das últimas aulas.
+</p>
+
+<b>FILTROS ESPACIAIS DE AGUÇAMENTO</b>
+<div>
+
+<p>
+Aguçamento: salientar transições de intensidade para o aumento da nitidez de uma imagem.<br>
+A força da resposta de um operador derivativo é proporcional ao nível de descontinuidade da intensidade da imagem no ponto no qual o operador é aplicado. Dessa forma, a diferenciação de uma imagem realça as bordas e outras descontinuidades (como o ruído) e atenua as áreas com intensidades de variação mais suave.
+</p>
+
+<img src="imagem6.png" alt="figura 6"><br>
+
+<p>
+As derivadas de uma função digital são definidas em termos de diferenças.<br>
+Para a primeira derivada:<br>
+<ol>	
+	<li>Seja zero em áreas de intensidade constante;</li>
+	<li>Seja diferente de zero no início de um degrau ou rampa de intensidades;</li>
+	<li>Seja diferente de zero ao longo das rampas.</li>
+</ol>
+De forma similar, qualquer definição de uma segunda derivada:<br>
+<ol>	
+	<li>Deve ser zero em áreas constantes;</li>
+	<li>Deve ser diferente de zero no início e no final de um degrau ou rampa de intensidade; e</li>
+	<li>Deve ser zero ao longo de rampas de inclinação constante.</li>
+</ol>
+A máxima variação possível de intensidades é finita e a distância mais curta na qual essa mudança pode ocorrer é a distância entre pixels adjacentes.<br>
+Ao calcular a primeira derivada na posição x, subtraímos o valor da função nessa posição do valor do próximo ponto. Dessa maneira, trata-se de uma operação de "olhar adiante". De maneira similar, para calcular a segunda derivada em x, utilizamos os pontos anterior e seguinte no cálculo.
+</p>
+
+<p>
+Em primeiro lugar, encontramos uma área de intensidade constante e as duas derivadas são zero, de modo que a condição (1) é satisfeita em ambas.<br>
+Em seguinda, encontramos uma rampa de intensidade seguida de um degrau e notamos que as derivadas de primeira e segunda ordem são diferentes de zero no início da rampa e do degrau; assim, a propriedade (2) é satisfeita para as duas derivadas.<br>
+Por fim, verificamos que a propriedade (3) também é satisfeita para as duas derivadas porque a primeira derivada é diferente de zero, e a segunda é zero ao longo da rampa.
+</p>
+
+<img src="imagem4.png" alt="figura 4"/><br>
+
+<p>
+Observe que o sinal da segunda derivada muda no início e no final de um degrau ou de uma rampa. Com efeito, em uma transição de degrau, uma linha ligando esses dois valores cruza o eixo horizontal na metade do caminho entre os dois extremos. Essa propriedade de cruzamente pelo zero é bastante útil para localizar bordas.
+</p>
+
+<img src="imagem5.png" alt="figura 5"/><br>
+
+<p>
+As bordas nas imagens digitais, muitas vezes, são transições parecidas com rampas em termos de intensidade, caso no qual a primeira derivada da imagem resultaria em bordas espessas pelo fato de a derivada ser diferente de zero ao longo da rampa. Por outro lado, a segunda derivada produziria uma dupla borda, com espessura de um pixel, separada por zeros. Com isso, concluímos que a segunda derivada realça muito mais os detalhes finos do que a primeira derivada e é mais fácil de implementar do que a primeira derivada.
+</p>
+
+<p>
+Implementação de derivadas bidimensionais de segunda ordem e sua utilização para o aguçamento de imagens. A metodologia consiste basicamente em definir uma fórmula discreta da derivada de segunda ordem e construir uma máscara de filtragem com base nesse formulação. Estamos interessados em filtros isotrópicos, cuja resposta independe da direção das descontinuidades da imagem à qual o filtro é aplicado. Em outras palavras, os filtros isotrópicos são invariantes em rotação, no sentido de que rotacionar a imagem e depois aplicar o filtro fornece o mesmo resultado que aplicar o filtro à imagem primeiro e depois rotacionar o resultado.<br>
+O operador derivativo isotrópico mais simples é o laplaciano. Como o laplaciano é um operador diferencial, sua utilização realça as descontinuidades de intensidade em uma imagem e atenua as regiões com níveis de intensidade de variação mais suave. Isso tenderá a produzir imagens nas quais as linhas de borda e outras descontinuidades aparecerão em tons de cinza sobrepostos a um fundo escuro e uniforme. As características do fundo podem ser "recuperadas" enquanto se preserva o efeito do aguçamento do laplaciano simplesmente adicionando a imagem laplaciana à original.
+</p>
+
+<p>
+Uma variação muito pequena entre pixels pode ser interpretada pelo operador derivativo como uma mudança abrupta. Essas pequenas oscilações podem gerar respostas fortes na derivada. Por isso, a solução é suavizar primeiro. O isotrópico é importante para o laplaciano, porque ele responde à magnitude da mudança, independentemente da orientação
+</p>
+
+<p>
+As derivadas de primeira ordem em processamento de imagens são implementadas utilizando a magnitude do gradiente.O gradiente aponta na direção de mudança mais rápida da intensidade.<br>
+Magnitude do gradiente (comprimento do vetor):<br>
+<ul>	
+	<li>Intensidade geral ("força") da borda.</li>
+	<li>Magnitude alta: transição abrupta (ex. borda nítida).</li>
+	<li>Magnitude baixa: transição suave (ex. degradê). </li>
+</ul>
+</p>
+
+<p>
+Derivada amplifica ruído.<br>
+Filtros derivativos respondem intensamente aos pixels que diferem de seus vizinhos.
+</p>
+
+<img src="imagem7.png" alt="figura 7"/><br>
+
+<p>
+Solução: suavizar primeiro
+</p>
+
+<img src="imagem8.png" alt="figura 8"/><br>
+
+<p>
+Suavização -> Derivada -> Aguçamento<br>
+O filtro Gaussiano é um filtro de suavização, que substitui um pixel por uma combinação ponderada dos pixels vizinhos, dando maior peso aos pixels mais próximos.<br>
+O efeito é "espalhar" cada valor um pouco para seus vizinhos.<br>
+Isso reduz as variações muito pequenas causadas pelo ruído.<br>
+Pela propriedade da convolução, podemos trocar a ordem da derivação e da convolução, construir diretamente um filtro que seja derivada do Gaussiano e convoluí-lo com a imagem.<br>
+Então a derivada do Gaussiano faz, conceitualmente: suavização + detecção de mudança em uma única operação de filtragem.
+</p>
+
+<img src="imagem9.png" alt="figura 9"/><br>
+
+</div>
+
+</body>
+</html>

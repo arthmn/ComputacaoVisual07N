@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+    min-height: 100vh;
+    color: #292929;
+	background: linear-gradient(120deg, #faf7f0, #f1eadf);
+    font-family: Georgia, serif;
+    }
+	img {
+	display: block;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	}
+  </style>
+</head>
+<body>
+
+<p>
+Resumo sobre o conteúdo da última aula, feito por meio de anotações em sala de aula, material oficial da disciplina e utilização de IA para preencher laculas teóricas
+</p>
+
+<b>DETECTOR DE BORDAS DE CANNY</b>
+<div>
+
+<img src="figura1.PNG" alt="figura 1"/><br>
+
+<p>
+<b>Filtro com derivadas da Gaussiana</b><br>
+A imagem original é primeiramente suavizada com um filtro Gaussiano para reduzir ruídos que poderiam ser falsamente identificados como bordas. Em seguida, calcula as derivadas espaciais nas direções x e y da imagem suavizada.<br>
+O <u>parâmetro σ</u> define o grau de suavização aplicado pelo filtro Gaussiano.<br>
+<ul>
+	<li>Um σ menor preserva detalhes finos e bordas mais sutis, mas torna o algoritmo mais suscetível a ruídos.</li>
+	<li>Aumentar o valor de σ aplica uma suavização maior, o que elimina ruídos e detalhes menores, focando apenas nas estruturas e bordas mais proeminentes da imagem.</li>
+</ul>
+</p>
+
+<img src="figura2.PNG" alt="figura 2"/><br>
+
+<p>
+<b>Magnitude e orientação do gradiente:</b> determina a <u>magnitude</u> (força da borda) e a <u>orientação</u> (direção da borda) do gradiente para cada pixel.<br>
+As transições de cor ou brilho em uma imagem real raramente ocorrem de forma abrupta em um único pixel. Elas formam uma "rampa" gradual de intensidade que se estende por vários pixels adjacentes. Como o cálculo do gradiente mede a taxa de variação dessa intensidade, toda a extensão dessa rampa apresentará valores de magnitude detectáveis (não-nulos). Além disso, a aplicação do filtro Gaussiano na etapa anterior espalha intencionalmente essas transições, o que alarga a resposta do gradiente e gera o aspecto borrado antes do refinamento.<br>
+Resulta em bordas espessas e borradas que indicam as regiões de transição de intensidade.
+</p>
+
+<p>
+<b>Supressão de não-máximos:</b> varre a imagem verificando se cada pixel é um máximo local na direção do seu gradiente<br>
+<u>Máximo local</u>: pixel que possui o maior valor de magnitude de gradiente quando comparado exclusivamente aos seus vizinhos diretos ao longo da linha de orientação do gradiente.<br>
+Verifica a vizinhança de um pixel na direção exata em que a mudança de cor é mais intensa; se o pixel avaliado for o pico central dessa transição (o ponto mais íngreme da rampa), ele é o máximo local e é preservado. Se um dos vizinhos tiver um valor maior, o pixel central não é um máximo local e tem seu valor zerado.<br>
+Pixels que não são máximos locais são suprimidos (têm seu valor zerado). No resultado visual, as bordas são convertidas em linhas finas. 
+</p>
+
+<p>
+<b>Limiarização e ligação (Histerese):</b>
+Dois limiares (um alto e um baixo) para classificar os pixels. Pixels com gradiente acima do limiar alto são classificados como <u>bordas fortes</u>. Pixels com valor entre os dois limiares são considerados <u>bordas fracas</u>.<br>
+<u>Ligação por histerese:</u> determina que as bordas fracas só são preservadas na imagem final se estiverem conectadas a pelo menos um pixel de borda forte, eliminando ruídos isolados.
+</p>
+
+</div>
+
+<b>DOMÍNIO DA FREQUÊNCIA</b>
+<div>
+
+<p>
+<b>Domínio espacial</b>: representação direta da imagem, estruturada como um reticulado de pixels onde cada coordenada (x,y)  possui um valor de cor ou intensidade.<br>
+<b>Domínio da frequência</b>: representação matemática que descreve a mesma imagem como uma soma de ondas senoidais e cossenoidais de diferentes amplitudes e frequências.<br>
+<ul>
+	<li>Um elemento muito concentrado ou abrupto no espaço (como um ponto minúsculo ou uma borda rígida) possui variações muito intensas. Para o sistema matemático reconstruir essa transição instantânea, ele precisa somar uma quantidade massiva de ondas de diferentes frequências, das mais baixas às mais altas. Logo, o seu espectro correspondente precisa ser extenso (largo).</li>
+	<li>Um elemento largo e constante no espaço (como um fundo desfocado ou uma parede de cor sólida) apresenta variações lentas. Ele pode ser descrito apenas por um pequeno agrupamento de frequências baixas, resultando em um espectro altamente concentrado (estreito).</li>
+</ul>
+</p>
+
+<p>
+Variações suaves e graduais de cor (como um céu limpo) correspondem a <u>baixas frequências</u>.<br>
+Transições abruptas (como texturas finas, bordas e ruídos) correspondem a <u>altas frequências</u>.
+</p>
+
+<p>As baixas frequências definem o contraste geral e as grandes formas (a estrutura básica), enquanto as altas frequências adicionam os detalhes refinados, o foco e as bordas.</p>
+
+<p>
+Ao digitalizar, amostrar ou redimensionar uma imagem, é necessário capturar informações suficientes para representar suas ondas com precisão.<br>
+<b>Taxa de Nyquist</b>: a frequência de amostragem deve ser pelo menos o dobro da maior frequência presente no sinal.<br>
+<b>Aliasing</b>: a imagem contiver frequências mais altas do que o sensor ou o redimensionamento consegue capturar (violando a taxa de Nyquist).
+</p>
+
+<p>
+Em relação ao limite de Nyquist (onde a frequência de amostragem deve ser no mínimo o dobro da maior frequência do sinal, ou 2f_max), as três situações definem a integridade da digitalização:<br>
+<ul>
+	<li><b>Sobreamostragem</b>: A taxa de amostragem é muito superior a 2f_max. O sinal é capturado com folga, o que previne o aliasing e facilita o uso de filtros físicos, mas gera redundância de informações, consumindo mais armazenamento e capacidade de processamento.</li>
+	<li><b>Amostragem Crítica</b>: A taxa opera exatamente em 2f_max. É o limite absoluto teórico para capturar o sinal sem perdas. Em implementações práticas, é altamente instável, pois a reconstrução perfeita da imagem exigiria filtros ideais perfeitos, os quais são fisicamente irrealizáveis.</li>
+	<li><b>Subamostragem</b>: A taxa é inferior a 2f_max. O sistema não registra pontos em quantidade suficiente para acompanhar as oscilações mais curtas do sinal. As altas frequências são perdidas e ocorre o aliasing inevitável, introduzindo padrões indesejados, como serrilhados, na imagem resultante.</li>
+</ul>
+</p>
+
+<p>
+<b>Anti-aliasing</b>: consiste em utilizar um filtro passa-baixa (como um filtro Gaussiano) na imagem original antes da amostragem.<br>
+Esse filtro suaviza a imagem, removendo intencionalmente as altas frequências que ultrapassam o limite de Nyquist, garantindo que o resultado amostrado, embora levemente menos nítido, não apresente distorções ou artefatos geométricos incorretos.
+</p>
+
+<img src="figura3.PNG" alt="figura 3"/><br>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+    min-height: 100vh;
+    color: #292929;
+	background: linear-gradient(120deg, #faf7f0, #f1eadf);
+    font-family: Georgia, serif;
+    }
+	img {
+	display: block;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	}
+  </style>
+</head>
+<body>
+
+<div>
+
+<p>
+Recentemente acompanhei uma reportagem na televisão sobre a preservação do Museu do Ipiranga por meio do processo de digitalização 3D.<br>
+O surgimento de interesse pelo cenário presenciado me fez questionar quais conceitos fundamentais estudados até então na disciplina de Computação Visual foram aplicados na digitalização 3D do Museu.
+</p>
+
+<img src="img.jpg" alt="figura 1"/><br>
+
+<p>
+O levamento utilizado pelo projeto do Museu do Ipirangapor meio de laser scanner 3D (com tecnologia de tempo de voo) e estações topográficas, associa-se à temática de sensores e aquisição de imagens. 
+Os sistemas de aquisição utilizam sensores para coletar a energia de entrada e produzir saídas que, posteriormente, são convertidas e digitalizadas.   
+</p>
+
+<p>
+A campanha de digitalização do museu gerou uma nuvem com mais de 240 bilhões de coordenadas adquiridas. 
+Isso é uma aplicação direta dos conceitos de amostragem e resolução espacial, em que uma maior quantidade de amostras proporciona uma maior resolução espacial, garantindo a capacidade de representar detalhes menores sem que ocorra perda de detalhes espaciais.   
+</p>
+
+<p>
+Quanto à relação ao processo de quantização estuado, o projeto de documentação do museu realizou o processamento de imagens a partir da nuvem de pontos levando em consideração dados de refletância calibrados, que é a digitalização dos valores de amplitude (níveis de intensidade permitidos) de um sinal.   
+</p>
+
+<p>
+Para o projeto de restauração, os modelos 3D foram utilizados para a extração de representações em diferentes escalas. Ao adequar representações digitais para diferentes tamanhos de exibição, ocorre a reamostragem, que atua no processo de redimensionamento de imagens. 
+Esse processo exige cuidado com o aliasing espacial e preservação da qualidade das representações do museu.
+</p>
+
+<p>
+O banco de dados integrado do museu foi estruturado para permitir a leitura do estado de conservação do edifício e a análise do desenvolvimento e consistência das fachadas monumentais. Na disciplina, estudamos que o processamento no domínio espacial atua diretamente nos pixels da imagem, utilizando filtros para modificar as representações.   
+No âmbito do processamento de imagens e filtragem espacial, se o objetivo for evidenciar rachaduras, bordas ou danos nas fachadas, podem ser utilizados filtros espaciais de aguçamento. De modo inverso, utilizam-se filtros de suavização para atenuar ruídos nas imagens geradas a partir da nuvem de pontos e realizar o borramento da imagem. 
+</p>
+
+<p>
+Esse blog foi feito com auxílio de IA e utiliza as seguintes referência:
+</p>
+
+<p>
+https://www.ipirangadigital.org/<br>
+https://jornal.usp.br/universidade/museu-do-ipiranga-adota-tecnologia-usada-pelo-coliseu-de-roma-para-preservacao-do-edificio-historico/<br>
+https://diaprem.it/progetto/museo-paulista-dell-ipiranga/<br>
+BALZANI, Marcello e RACO, Fabiana e KÜHL, Beatriz Mugayar. 3D City modelling toward conservation and management: the digital documentation of Museu do Ipiranga - USP, San Paulo, Brazil. 2020, Anais.. Göttingen, Alemanha: Copernicus Publications, 2020. Disponível em: https://isprs-archives.copernicus.org/articles/XLIV-4-W3-2020/99/2020/isprs-archives-XLIV-4-W3-2020-99-2020.pdf. Acesso em: 22 out. 2026.
+</p>
+
+</div>
+
+</body>
+</html>
